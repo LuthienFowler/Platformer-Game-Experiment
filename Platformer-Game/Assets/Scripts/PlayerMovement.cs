@@ -9,10 +9,12 @@ public class PlayerMovement : MonoBehaviour
     public float jumpForce = 10f;
     private Rigidbody2D playerRb;
     public bool isOnGround = false;
+    public float hi;
 
     // Bounds
-    private float xBoundLeft = -8.5f;
-    private float xBoundRight = 0f;
+    public float xBoundLeft = -3f;
+    public float xBoundRight = 0f;
+    private float yBoundBottom = -5f;
 
     // Start is called before the first frame update
     void Start()
@@ -30,7 +32,7 @@ public class PlayerMovement : MonoBehaviour
     // Moving the player
     void Move()
     {
-        float hi = Input.GetAxis("Horizontal");
+        hi = Input.GetAxis("Horizontal");
 
         transform.Translate(Vector3.right * hi * speed * Time.deltaTime);
 
@@ -53,6 +55,17 @@ public class PlayerMovement : MonoBehaviour
         }
     }
 
+    // Destroying the player if the player falls
+    void Die()
+    {
+        if(transform.position.y < yBoundBottom)
+        {
+            Destroy(gameObject);
+            Debug.Log("You died!");
+        }
+    }
+
+    // Checking if the player collided with anything 
     private void OnCollisionEnter2D(Collision2D collision)
     {
         if (collision.gameObject.CompareTag("Ground"))
