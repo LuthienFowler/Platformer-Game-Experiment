@@ -27,6 +27,7 @@ public class PlayerMovement : MonoBehaviour
     {
         Move();
         Jump();
+        Die();
     }
 
     // Moving the player
