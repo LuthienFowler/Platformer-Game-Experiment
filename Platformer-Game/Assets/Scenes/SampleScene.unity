@@ -354,7 +354,8 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   speed: 10
-  jumpForce: 10
+  jumpForce: 8
+  isOnGround: 0
 --- !u!1001 &1896411246101287969
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -364,6 +365,10 @@ PrefabInstance:
     m_Modifications:
     - target: {fileID: 1896411247525710464, guid: 96076dc52634ac042830f8077fd6ee41, type: 3}
       propertyPath: m_Name
+      value: Ground
+      objectReference: {fileID: 0}
+    - target: {fileID: 1896411247525710464, guid: 96076dc52634ac042830f8077fd6ee41, type: 3}
+      propertyPath: m_TagString
       value: Ground
       objectReference: {fileID: 0}
     - target: {fileID: 1896411247525710466, guid: 96076dc52634ac042830f8077fd6ee41, type: 3}
