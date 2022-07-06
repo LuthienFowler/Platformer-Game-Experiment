@@ -10,6 +10,10 @@ public class PlayerMovement : MonoBehaviour
     private Rigidbody2D playerRb;
     public bool isOnGround = false;
 
+    // Bounds
+    private float xBoundLeft = -8.5f;
+    private float xBoundRight = 0f;
+
     // Start is called before the first frame update
     void Start()
     {
@@ -23,13 +27,23 @@ public class PlayerMovement : MonoBehaviour
         Jump();
     }
 
+    // Moving the player
     void Move()
     {
         float hi = Input.GetAxis("Horizontal");
 
         transform.Translate(Vector3.right * hi * speed * Time.deltaTime);
+
+        if (transform.position.x < xBoundLeft)
+        {
+            transform.position = new Vector3(xBoundLeft, transform.position.y, transform.position.z);
+        } else if (transform.position.x > xBoundRight)
+        {
+            transform.position = new Vector3(xBoundRight, transform.position.y, transform.position.z);
+        }
     }
 
+    // Making the player jump 
     void Jump()
     {
         if (Input.GetKeyDown(KeyCode.Space) && isOnGround)
