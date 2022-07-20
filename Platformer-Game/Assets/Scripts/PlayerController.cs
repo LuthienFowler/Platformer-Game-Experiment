@@ -1,8 +1,9 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using TMPro;
 
-public class PlayerMovement : MonoBehaviour
+public class PlayerController : MonoBehaviour
 {
     // Variables
     public float speed = 10f;
@@ -10,6 +11,10 @@ public class PlayerMovement : MonoBehaviour
     private Rigidbody2D playerRb;
     public bool isOnGround = false;
     public float hi;
+    public int coinCount = 0;
+    public bool isDead = false;
+    public bool gameWon = false;
+    private Vector2 spawnPos = new Vector2(-2.73f, 0.28f);
 
     // Bounds
     public float xBoundLeft = -3f;
@@ -25,9 +30,8 @@ public class PlayerMovement : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
-        Move();
-        Jump();
         Die();
+
     }
 
     // Moving the player
@@ -49,7 +53,7 @@ public class PlayerMovement : MonoBehaviour
     // Making the player jump 
     void Jump()
     {
-        if (Input.GetKeyDown(KeyCode.Space) && isOnGround)
+        if ((Input.GetKeyDown(KeyCode.Space) || Input.GetKeyDown(KeyCode.W) || Input.GetKeyDown(KeyCode.UpArrow)) && isOnGround)
         {
             playerRb.AddForce(Vector3.up * jumpForce, ForceMode2D.Impulse);
             isOnGround = false;
@@ -59,10 +63,18 @@ public class PlayerMovement : MonoBehaviour
     // Destroying the player if the player falls
     void Die()
     {
-        if(transform.position.y < yBoundBottom)
+        if (!gameWon)
         {
-            Destroy(gameObject);
-            Debug.Log("You died!");
+            if (transform.position.y < yBoundBottom)
+            {
+                Destroy(gameObject);
+                isDead = true;
+            }
+            else
+            {
+                Move();
+                Jump();
+            }
         }
     }
 
@@ -72,6 +84,21 @@ public class PlayerMovement : MonoBehaviour
         if (collision.gameObject.CompareTag("Ground"))
         {
             isOnGround = true;
+        }
+        else if (collision.gameObject.CompareTag("coin"))
+        {
+            coinCount++;
+
+            Destroy(collision.gameObject);
+        }
+    }
+
+    private void OnTriggerEnter2D(Collider2D other)
+    {
+        if (other.CompareTag("end"))
+        {
+            Destroy(gameObject);
+            gameWon = true;
         }
     }
 }
