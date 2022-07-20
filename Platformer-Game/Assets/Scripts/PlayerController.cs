@@ -14,7 +14,6 @@ public class PlayerController : MonoBehaviour
     public int coinCount = 0;
     public bool isDead = false;
     public bool gameWon = false;
-    private Vector2 spawnPos = new Vector2(-2.73f, 0.28f);
 
     // Bounds
     public float xBoundLeft = -3f;
